@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { useDebounce } from '../hooks/useDebounce';
 import MedicineCard from '../components/MedicineCard';
 
-// Simple in-memory cache for API results
+// In memory cache
 const searchCache = new Map();
 
 function SearchPage() {
@@ -34,7 +34,7 @@ function SearchPage() {
     setError(null);
     setEmpty(false);
 
-    // Cancel previous request if still pending
+    
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
     }
@@ -50,7 +50,6 @@ function SearchPage() {
 
       if (!response.ok) {
         if (response.status === 404) {
-          // 404 from this API means no results found for the query
           setResults([]);
           setEmpty(true);
           searchCache.set(query, []);
